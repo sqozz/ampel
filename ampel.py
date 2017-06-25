@@ -33,7 +33,8 @@ def logout():
 @route("/manage")
 def manage():
 	global employees
-	if request.get_cookie("employeeId") is None:
+	if request.get_cookie("employeeId") is None or request.get_cookie("employeeId") not in employees:
+		response.set_cookie("employeeId", "") #clear cookie
 		redirect("/login")
 	else:
 		return template("manage", employeeData=employees[request.get_cookie("employeeId")])
