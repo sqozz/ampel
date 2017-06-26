@@ -6,6 +6,12 @@ but not yet tested (comming soon™).
 
 The main porpuse is intendet for 2-3 lights indicating the availability of employees.
 
+## Installation
+1. `virtualenv -p python3 venv`
+2. `source ./venv/bin/activate`
+3. `pip3 install -r requirements.txt`
+4. `python3 ampel.py`
+
 ## Technical stuff
 Ampel is build with python, flask, html5 with canvas, css3 and also some javascript.
 

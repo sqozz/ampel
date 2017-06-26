@@ -1,3 +1,4 @@
 Hans Maier|251
-Ypsilon|252
-Xanthippe|253
+Ypsilon|251
+Xanthippe|252
+Foobar|252

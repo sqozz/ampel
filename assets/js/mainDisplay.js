@@ -2,22 +2,34 @@ window.onload = function() {
 	setInterval(updateDashboard, 500)
 }
 
+oldEmployeeCount = -1
+maxLightWidth = 100
+
 function updateDashboard() {
-	//document.body.innerHTML = ""
 	currentStatus = getEmployeeStatus()
 	currentStatus.then(function(data) {
 		jsonData = data
+		employeeCount = 0
 		for (var employee in jsonData) {
+			employeeCount += 1
 			if (!jsonData.hasOwnProperty(employee)) continue;
 
-			name = jsonData[employee][0]
-			room = jsonData[employee][1]
+			employeeName = jsonData[employee][0]
+			employeeRoom = jsonData[employee][1]
 			available = jsonData[employee][2]
-			//document.body.innerHTML += jsonData[employee][0] + " is available: " + jsonData[employee][2] + "<br />"
-			drawLight(available, name.replace(" ", "_"), name)
+			light_id = employeeName.replace(" ", "_")
+			light_label = employeeName
+			room_id  = "room_" + employeeRoom.replace(" ", "_")
+			room_label = employeeRoom
+			drawLight(available, light_id, light_label, room_id, room_label)
+		}
+		if (employeeCount != oldEmployeeCount) {
+			console.log("employee count changed, recalculate max size")
+			oldEmployeeCount = employeeCount
+			maxLightWidth = findSmallestBoundBox()
 		}
 	}).catch(function(err) {
-		console.log("err")
+		console.log(err)
 	})
 }
 
@@ -31,13 +43,25 @@ function getEmployeeStatus() {
 	});
 }
 
-function createOrGetLight(id, label) {
-	light = document.querySelectorAll(".trafficLight." + id)
+function createOrGetRoomContainer(room_id, room_label) {
+	roomContainer = document.querySelectorAll(".room." + room_id)
+	if (roomContainer.length > 0) {
+		return roomContainer[0]
+	} else {
+		roomContainer = createRoomContainer(room_id, room_label)
+		document.body.appendChild(roomContainer)
+		return roomContainer
+	}
+}
+
+function createOrGetLight(light_id, light_label, room_id, room_label) {
+	light = document.querySelectorAll(".trafficLight." + light_id)
+	roomContainer = createOrGetRoomContainer(room_id, room_label)
 	if (light.length > 0) {
 		return light[0]
 	} else {
-		light = createLight(id, label)
-		document.body.appendChild(light)
+		light = createLight(light_id, light_label)
+		roomContainer.appendChild(light)
 		return light
 	}
 }
@@ -57,17 +81,42 @@ function createLight(id, labelText) {
 	return trafficLight
 }
 
-function drawLight(available, id, label) {
-	container = createOrGetLight(id, label)
-	//clearCanvas()
-	//container = document.querySelectorAll(".trafficLight." + id)[0]
+function createRoomContainer(room_id, room_label) {
+	roomContainer = document.createElement("div")
+	roomContainer.classList.add("room")
+	roomContainer.classList.add(room_id)
+	label = document.createElement("div")
+	label.classList.add("label")
+	label.innerHTML = "Raum " + room_label
+	roomContainer.appendChild(label)
+
+	return roomContainer
+}
+
+function findSmallestBoundBox() {
+	allLights = document.querySelectorAll(".lights")
+	smallestBox = 1000
+	if (allLights.length > 0) {
+		for (i = 0; i < allLights.length; i++) {
+			if (allLights[i].parentElement.getBoundingClientRect().width < smallestBox) { smallestBox = allLights[i].parentElement.getBoundingClientRect().width }
+		}
+	}
+	
+	return smallestBox;
+}
+
+function drawLight(available, light_id, light_label, room_id, room_label) {
+	container = createOrGetLight(light_id, light_label, room_id, room_label)
 	canvas = container.children[1]
-	//canvas = document.querySelectorAll(".trafficLight." + id + ">canvas")[0];
 	canvas.width = container.getBoundingClientRect().width
+	canvas.width = maxLightWidth
 	canvas.height = container.getBoundingClientRect().height - 80
+	canvas.height = maxLightWidth * 1.5
 	cxt = canvas.getContext("2d");
 	cHeight = canvas.getBoundingClientRect().height
+	cHeight = canvas.height
 	cWidth =  canvas.getBoundingClientRect().width
+	cWidth = canvas.width
 	centerX = cWidth / 2;
 	centerRedY = cHeight / 4;
 	centerGreenY = (cHeight / 4) * 3;
