@@ -44,7 +44,7 @@
 	<body>
 		<script src="assets/js/ampel.js"></script>
 		<div id="header">
-			<div>Hallo {{employeeData[0]}} (Raum {{employeeData[1]}})</div>
+			<div>{{employeeData[0]}} (Raum {{employeeData[1]}})</div>
 			<form method="post" action="logout">
 				<button type="submit">Abmelden</button>
 			</form>
