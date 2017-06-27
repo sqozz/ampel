@@ -21,7 +21,7 @@ The main porpuse is intendet for 2-3 lights indicating the availability of emplo
 4. `python3 ampel.py`
 
 ## Technical stuff
-Ampel is build with python, flask, html5 with canvas, css3 and also some javascript.
+Ampel is build with python3, flask, html5 with canvas, css3 and also ~~some~~ javascript (at least it does not depend on jquery…).
 
 ## Hack me
 The code is quiet flat. Try to hack around with it to suit your needs.
