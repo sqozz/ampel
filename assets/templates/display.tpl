@@ -61,6 +61,7 @@
 		</style>
 	</head>
 	<body>
+		<script src="assets/js/ampel.js"></script>
 		<script src="assets/js/mainDisplay.js"></script>
 	</body>
 </html>
