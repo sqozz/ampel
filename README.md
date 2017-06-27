@@ -1,10 +1,18 @@
-## Ampel - Version 0.1 aka "better scm this shit"
+## Ampel - Version 0.2 aka "now it's almost pretty"
 This lovely piece of code is designed to display traffic lights indicating the presence or absence of anything.
 
 It is designed to run on any OS running python3 and a reasonable modern browser. Yes, even Windows is supported
 but not yet tested (comming soon™).
 
 The main porpuse is intendet for 2-3 lights indicating the availability of employees.
+
+![dashboard](https://files.geekify.de/ampel/dashboard.png)
+
+
+![management](https://files.geekify.de/ampel/management.png)
+
+
+![login](https://files.geekify.de/ampel/login.png)
 
 ## Installation
 1. `virtualenv -p python3 venv`
