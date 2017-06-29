@@ -60,8 +60,11 @@ function createRoomContainer(room_id, room_label) {
 	roomContainer.classList.add(room_id)
 	label = document.createElement("div")
 	label.classList.add("label")
-	label.innerHTML = "Raum " + room_label
+	label.innerHTML = "Zimmer " + room_label
+	light = document.createElement("div")
+	light.classList.add("lights")
 	roomContainer.appendChild(label)
+	roomContainer.appendChild(light)
 
 	return roomContainer
 }

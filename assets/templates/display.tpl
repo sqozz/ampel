@@ -2,6 +2,11 @@
 	<head>
 		<title>Anzeige</title>
 		<style>
+			html {
+				height: 100%;
+				overflow: hidden;
+			}
+
 			body {
 				display: flex;
 				justify-content: center;
@@ -53,9 +58,13 @@
 				margin-bottom: 1%;
 			}
 
-			canvas.lights {
-				background-color: gray;
-				
+			canvas.light {
+				background-color: #4b4b4b;
+			}
+			
+			div.lights {
+				display: flex;
+				width: 100%;
 			}
 
 		</style>

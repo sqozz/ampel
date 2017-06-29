@@ -25,12 +25,15 @@ function drawLight(available, light_id, light_label, room_id, room_label) {
 	if (available == true) {
 		green = "#00f300" //turned on
 		red = "#570000" //turned off
+		red = "rgba(87, 00, 00, 0.2"
 	} else {
-		green = "#003000"
+		green = "#0030004D"
+		green = "rgba(00, 48, 00, 0.2"
 		red = "#cc0000"
 	}
-	cxt.strikeStyle = "#999999";
-	cxt.lineWidth = 3;
+	cxt.strikeStyle = "#FFFFFF";
+
+	cxt.lineWidth = 6;
 
 	// Draw green light
 	cxt.beginPath()
@@ -51,13 +54,14 @@ function createOrGetLight(light_id, light_label, room_id, room_label) {
 	light = document.querySelectorAll(".trafficLight." + light_id)
 	if (typeof room_id !== 'undefined') {
 		roomContainer = createOrGetRoomContainer(room_id, room_label)
+		lightsContainer = roomContainer.getElementsByClassName("lights")[0]
 	}
 	if (light.length > 0) {
 		return light[0]
 	} else {
 		light = createLight(light_id, light_label)
 		if (typeof room_id !== 'undefined') {
-			roomContainer.appendChild(light)
+			lightsContainer.appendChild(light)
 		} else {
 			document.body.appendChild(light)
 		}
@@ -74,7 +78,7 @@ function createLight(id, labelText) {
 	label.innerHTML = labelText
 	trafficLight.appendChild(label)
 	canvas = document.createElement("canvas")
-	canvas.classList.add("lights")
+	canvas.classList.add("light")
 	trafficLight.appendChild(canvas)
 
 	return trafficLight
