@@ -74,13 +74,13 @@ def staticContent(filename):
 
 def initTool():
 	global employees
-	employees = {}
+	employees = []
 	with open("bearbeiter.txt", "r") as f:
 		for line in f.readlines():
 			name, room = line.strip().split("|")
 			status = False
 			employeeId = name.strip().replace(" ", "_")
-			employees[employeeId] = (name, room, status)
+			employees.append((name, room, status))
 	pass
 
 
