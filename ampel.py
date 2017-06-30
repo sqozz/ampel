@@ -3,7 +3,6 @@ import bottle
 import json
 from bottle import route, post, run, template, static_file, request, response, redirect
 import sqlite3
-import pdb
 
 @route("/")
 def index():
@@ -13,7 +12,8 @@ def index():
 def login():
 	global employees
 	if request.get_cookie("employeeId") is None:
-		return template("login", employees=sorted(employees.items(), key=lambda entry: entry[0]))
+		return template("login", employees=employees)
+		#return template("login", employees=sorted(employees.items(), key=lambda entry: entry[0]))
 	else:
 		redirect("/manage")
 
@@ -21,31 +21,43 @@ def login():
 def loginUser():
 	global employees
 	employeeId = request.forms.get("employeeId")
-	employee = employees[employeeId]
-	response.set_cookie("employeeId", employeeId, max_age=60*60*24*365*10)
+	response.set_cookie("employeeId", employeeId , max_age=60*60*24*365*10)
 	redirect("/manage")
+
+def loggedIn():
+	try:
+		employeeId = int(request.get_cookie("employeeId"))
+	except ValueError:
+		employeeId = None
+	if employeeId is None or employeeId > len(employees) or employeeId < 0:
+		response.set_cookie("employeeId", "") #clear cookie
+		redirect("/login")
+	else:
+		return employeeId
 
 @post("/logout")
 def logout():
+	employeeId = loggedIn()
+	if employeeId >= 0:
+		global employees
+		loggedOut = list(employees[employeeId])
+		loggedOut[2] = False #sets status to not available
+		employees[employeeId] = loggedOut
 	response.set_cookie("employeeId", "") #clear cookie
 	redirect("/login")
 
 @route("/manage")
 def manage():
 	global employees
-	if request.get_cookie("employeeId") is None or request.get_cookie("employeeId") not in employees:
-		response.set_cookie("employeeId", "") #clear cookie
-		redirect("/login")
-	else:
-		return template("manage", employeeData=employees[request.get_cookie("employeeId")])
+	employeeId = loggedIn()
+	if employeeId >= 0:
+		return template("manage", employeeData=employees[employeeId])
 
 @post("/setStatus")
 def setStatus():
-	if request.get_cookie("employeeId") is None:
-		redirect("/login")
-	else:
+	employeeId = loggedIn()
+	if employeeId >= 0:
 		global employees
-		employeeId = request.get_cookie("employeeId")
 		newStatus = list(employees[employeeId])
 		newStatus[2] = not newStatus[2] #toggle availability
 		employees[employeeId] = newStatus

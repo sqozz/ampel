@@ -33,8 +33,8 @@
 		<div>Login für Mitarbeiter:</div>
 		<form method="post">
 			<select name="employeeId">
-				% for employee in employees:
-				<option value="{{employee[0]}}">{{employee[1][0]}}</option>
+				% for i in range(0, len(employees)):
+				<option value="{{i}}">{{employees[i][0]}}</option>
 				% end
 			</select>
 			<button type="submit">Einloggen</button>
