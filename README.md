@@ -4,7 +4,7 @@ This lovely piece of code is designed to display traffic lights indicating the p
 It is designed to run on any OS running python3 and a reasonable modern browser. Yes, even Windows is supported
 and it runs great under Windows 7!
 
-The main porpuse is intendet for 2-3 lights indicating the availability of employees.
+The main purpose is intended for 2-3 lights indicating the availability of employees.
 
 ![dashboard](https://files.geekify.de/ampel/dashboard.png)
 
@@ -24,9 +24,9 @@ The main porpuse is intendet for 2-3 lights indicating the availability of emplo
 Ampel is build with python3, flask, html5 with canvas, css3 and also ~~some~~ javascript (at least it does not depend on jquery…).
 
 ## Hack me
-The code is quiet flat. Try to hack around with it to suit your needs.
+The code is quite flat. Try to hack around with it to suit your needs.
 All rendering is as generic as possible while fitting close to my needs.
-But adding more lights is for example just a matter of adjusting the CSS and adding a new line to "bearbeiter.txt" - 
-thats all, everything else is already done.
+For example, adding more lights is just a matter of adjusting the CSS and adding a new line to "bearbeiter.txt" - 
+that's all, everything else is already done.
 
-PRs are always welcome. Feature requests beeing noticed at least.
+PRs are always welcome. Feature requests are getting noticed at least.
